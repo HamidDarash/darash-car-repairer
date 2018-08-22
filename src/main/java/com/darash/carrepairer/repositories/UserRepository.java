@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public interface UserRepository extends ReactiveCassandraRepository<User, UUID> {
 
-    @Query("select *,count(*) as from users where isonline = ?0 ALLOW FILTERING")
+    @Query("select * from users where isonline = ?0 ALLOW FILTERING")
     Flux<User> findByIsOnline(final boolean isonline);
 
     @Override
