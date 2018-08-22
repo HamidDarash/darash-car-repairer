@@ -19,4 +19,7 @@ public interface UserRepository extends ReactiveCassandraRepository<User, UUID> 
 
     @Override
     Mono<Void> delete(User user);
+
+
+
 }

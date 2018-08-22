@@ -13,11 +13,6 @@ public interface LocationRepository extends ReactiveCassandraRepository<UserByLo
 //    @Query(value = "select sinof(latlng.lat) as sin_lat from user_by_location", allowFiltering = true)
     Flux<UserByLocation> findByLatLng(double lat, double Lng, double R, double rad);
 
-
-    //    @Query(value = "select * from user_by_location", allowFiltering = true)
-//    Flux<UserByLocation> findByLatLng();
-
-
     @Override
     Flux<UserByLocation> findAll();
 }
