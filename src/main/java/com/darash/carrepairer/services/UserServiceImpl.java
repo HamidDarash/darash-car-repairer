@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -42,6 +44,12 @@ public class UserServiceImpl implements UserService {
         Mono<User> userMono = userRepository.save(user);
         userMono.subscribe(System.out::println);
         return userMono;
+    }
+
+    @Override
+    public Mono<User> findByMobile(String query) {
+        System.out.println(query);
+        return userRepository.findByMobileBySolr(query);
     }
 
     @Override

@@ -1,12 +1,14 @@
 package com.darash.carrepairer.repositories;
 
 import com.darash.carrepairer.entities.User;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.cassandra.repository.Query;
 import org.springframework.data.cassandra.repository.ReactiveCassandraRepository;
 import org.springframework.data.repository.query.Param;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public interface UserRepository extends ReactiveCassandraRepository<User, UUID> {
@@ -20,6 +22,6 @@ public interface UserRepository extends ReactiveCassandraRepository<User, UUID> 
     @Override
     Mono<Void> delete(User user);
 
-
-
+    @Query("select * from users where solr_query = '{\"q\":\"mobile: ?query\"}' ALLOW FILTERING")
+    Mono<User> findByMobileBySolr(@Param("query") String query);
 }
