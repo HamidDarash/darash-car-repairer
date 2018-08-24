@@ -3,7 +3,6 @@ package com.darash.carrepairer.api;
 import com.darash.carrepairer.entities.User;
 import com.darash.carrepairer.entities.UserType;
 import com.darash.carrepairer.repositories.LocationRepository;
-import com.darash.carrepairer.repositories.UserCassandraReository;
 import com.darash.carrepairer.repositories.UserRepository;
 import com.darash.carrepairer.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.websocket.server.PathParam;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -25,9 +23,11 @@ public class UserController {
 
     private UserService userService;
     private final LocationRepository locationRepository;
+    private final UserRepository userRepository;
 
-    public UserController(LocationRepository locationRepository) {
+    public UserController(LocationRepository locationRepository, UserRepository userRepository) {
         this.locationRepository = locationRepository;
+        this.userRepository = userRepository;
     }
 
     @Autowired
@@ -50,7 +50,7 @@ public class UserController {
 
     @RequestMapping(value = "/getuserbymobile", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     private Flux<User> getUserByMobileSolrSearch(@PathParam("mobile") String mobile) {
-         return userService.findByMobile(mobile);
+         return userRepository.findByMobileBySolr(mobile);
     }
 
 

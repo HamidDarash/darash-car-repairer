@@ -3,7 +3,7 @@ package com.darash.carrepairer.entities;
 import com.datastax.driver.core.DataType;
 import com.datastax.driver.core.UDTValue;
 import com.datastax.driver.core.utils.UUIDs;
-import com.datastax.driver.dse.geometry.Point;
+
 import org.springframework.data.cassandra.core.cql.Ordering;
 import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
 import org.springframework.data.cassandra.core.mapping.CassandraType;
@@ -37,12 +37,25 @@ public class UserByLocation implements Serializable {
     UDTValue alternative;
 
     @Column
+    private String location;
+
+
+
+    @Column
     private double latitude;
     @Column
     private double longtude;
 
     @Deprecated
     public UserByLocation() {
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        location = location;
     }
 
     public double getLatitude() {
@@ -101,10 +114,12 @@ public class UserByLocation implements Serializable {
         this.user_id = user_id;
     }
 
-    public UserByLocation(UUID user_id, LatLng latLng, double latitude, double longtude) {
+    public UserByLocation(UUID user_id, LatLng latLng, double latitude, double longtude,String location) {
         this.user_id = user_id;
         this.latLng = latLng;
         this.latitude = latitude;
         this.longtude = longtude;
+        this.location = location;
+
     }
 }

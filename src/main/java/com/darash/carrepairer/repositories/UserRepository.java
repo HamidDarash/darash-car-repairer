@@ -7,6 +7,7 @@ import org.springframework.data.cassandra.repository.AllowFiltering;
 import org.springframework.data.cassandra.repository.Query;
 import org.springframework.data.cassandra.repository.ReactiveCassandraRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.scheduling.annotation.Async;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -25,6 +26,7 @@ public interface UserRepository extends ReactiveCassandraRepository<User, UUID> 
     Mono<Void> delete(User user);
 
     @Query("select * from users where solr_query = '{\"q\":\"mobile: ?0\"}'")
+    @Async
     @AllowFiltering
-    Flux<User> findByMobileBySolr(String query);
+    Flux<User> findByMobileBySolr(String mobile);
 }
