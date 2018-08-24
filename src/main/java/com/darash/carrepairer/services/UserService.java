@@ -17,7 +17,7 @@ public interface UserService {
 
     Mono<User> saveOrUpdate(User user);
 
-    Mono<User> findByMobile(String query);
+    Flux<User> findByMobile(String mobile);
 
     void delete(User user);
 }

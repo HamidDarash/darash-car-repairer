@@ -47,9 +47,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Mono<User> findByMobile(String query) {
-        System.out.println(query);
-        return userRepository.findByMobileBySolr(query);
+    public Flux<User> findByMobile(String mobile) {
+        return userRepository.findByMobileBySolr(mobile);
     }
 
     @Override

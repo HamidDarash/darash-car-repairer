@@ -3,6 +3,7 @@ package com.darash.carrepairer.entities;
 import com.datastax.driver.core.DataType;
 import com.datastax.driver.core.UDTValue;
 import com.datastax.driver.core.utils.UUIDs;
+import com.datastax.driver.dse.geometry.Point;
 import org.springframework.data.cassandra.core.cql.Ordering;
 import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
 import org.springframework.data.cassandra.core.mapping.CassandraType;

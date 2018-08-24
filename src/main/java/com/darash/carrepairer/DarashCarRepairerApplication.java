@@ -64,6 +64,7 @@ public class DarashCarRepairerApplication {
 //            LatLng latLng2 = new LatLng(42.154441, 34.58511);
 //            UserByLocation location2 = new UserByLocation(user2.getId(), latLng2, latLng2.getLat(), latLng2.getLng());
 //            locationRepository.save(location2).subscribe(System.out::println);
+
         };
     }
 }
