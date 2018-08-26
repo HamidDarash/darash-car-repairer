@@ -25,11 +25,7 @@ public class RepairRequest {
     @CassandraType(type = DataType.Name.TIMESTAMP)
     private LocalDate eventTime;
 
-    @Column
-    private LatLng latLngSource;
 
-    @Column
-    private LatLng latLngDestination;
 
     @CassandraType(type = DataType.Name.UDT, userTypeName = "latLng")
     UDTValue alternative;
@@ -42,22 +38,6 @@ public class RepairRequest {
     private boolean cancel;
     @Column
     private int status;
-
-    public LatLng getLatLngSource() {
-        return latLngSource;
-    }
-
-    public void setLatLngSource(LatLng latLngSource) {
-        this.latLngSource = latLngSource;
-    }
-
-    public LatLng getLatLngDestination() {
-        return latLngDestination;
-    }
-
-    public void setLatLngDestination(LatLng latLngDestination) {
-        this.latLngDestination = latLngDestination;
-    }
 
     @Deprecated
     public RepairRequest() {
@@ -115,42 +95,4 @@ public class RepairRequest {
         this.status = status;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof RepairRequest)) return false;
-        RepairRequest that = (RepairRequest) o;
-        return isAccept() == that.isAccept() &&
-                isCancel() == that.isCancel() &&
-                getStatus() == that.getStatus() &&
-                Objects.equals(getId(), that.getId()) &&
-                Objects.equals(getTimestamp(), that.getTimestamp()) &&
-                Objects.equals(getEventTime(), that.getEventTime()) &&
-                Objects.equals(getLatLngSource(), that.getLatLngSource()) &&
-                Objects.equals(getLatLngDestination(), that.getLatLngDestination()) &&
-                Objects.equals(alternative, that.alternative) &&
-                Objects.equals(getUserIdAccepted(), that.getUserIdAccepted());
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(getId(), getTimestamp(), getEventTime(), getLatLngSource(), getLatLngDestination(), alternative, isAccept(), getUserIdAccepted(), isCancel(), getStatus());
-    }
-
-    @Override
-    public String toString() {
-        return "RepairRequest{" +
-                "id=" + id +
-                ", timestamp=" + timestamp +
-                ", eventTime=" + eventTime +
-                ", latLngSource=" + latLngSource +
-                ", latLngDestination=" + latLngDestination +
-                ", alternative=" + alternative +
-                ", accept=" + accept +
-                ", userIdAccepted=" + userIdAccepted +
-                ", cancel=" + cancel +
-                ", status=" + status +
-                '}';
-    }
 }
