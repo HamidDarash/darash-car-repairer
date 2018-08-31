@@ -4,7 +4,10 @@ import com.datastax.driver.core.DataType;
 import com.datastax.driver.core.utils.UUIDs;
 import org.springframework.data.cassandra.core.cql.Ordering;
 import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
-import org.springframework.data.cassandra.core.mapping.*;
+import org.springframework.data.cassandra.core.mapping.CassandraType;
+import org.springframework.data.cassandra.core.mapping.Column;
+import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
+import org.springframework.data.cassandra.core.mapping.Table;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -14,22 +17,18 @@ import java.util.UUID;
 
 @Table(value = "users")
 public class User implements Serializable {
-    @PrimaryKeyColumn(name = "id", ordinal = 0, type = PrimaryKeyType.PARTITIONED, ordering = Ordering.ASCENDING)
-    private UUID id = UUIDs.random() ;
-
-    @PrimaryKeyColumn(name = "timestamp", ordinal = 1, type = PrimaryKeyType.PARTITIONED)
-    private UUID timeStamp = UUIDs.timeBased();
+    @PrimaryKeyColumn(name = "id", ordinal = 2, type = PrimaryKeyType.CLUSTERED, ordering = Ordering.DESCENDING)
+    private UUID id = UUIDs.random();
 
     @Column
     private Date eventTime;
-
-    @PrimaryKeyColumn(name = "internationalcode", ordinal = 2, type = PrimaryKeyType.CLUSTERED, ordering = Ordering.ASCENDING)
+    @PrimaryKeyColumn(name = "internationalcode", ordinal = 0, type = PrimaryKeyType.PARTITIONED, ordering = Ordering.DESCENDING)
     private String internationalcode;
     @Column
     private String fullname;
     @Column
     private String password;
-    @PrimaryKeyColumn(name = "email", ordinal = 1, type = PrimaryKeyType.PARTITIONED)
+    @PrimaryKeyColumn(name = "email", ordinal = 1, type = PrimaryKeyType.PARTITIONED, ordering = Ordering.DESCENDING)
     private String email;
     @Column
     private String address;
@@ -46,13 +45,12 @@ public class User implements Serializable {
 
     @Column
     private Boolean isActive;
-    @Column
-    private boolean isOnline;
-    @Column
-    private String ip;
 
     @Column
-    private UUID usertypeid;
+    private Boolean isOnline;
+
+    @Column
+    private String ip;
 
     public UUID getId() {
         return id;
@@ -142,11 +140,11 @@ public class User implements Serializable {
         isActive = active;
     }
 
-    public boolean getOnline() {
+    public Boolean getOnline() {
         return isOnline;
     }
 
-    public void setOnline(boolean online) {
+    public void setOnline(Boolean online) {
         isOnline = online;
     }
 
@@ -158,22 +156,6 @@ public class User implements Serializable {
         this.ip = ip;
     }
 
-    public UUID getUsertypeid() {
-        return usertypeid;
-    }
-
-    public void setUsertypeid(UUID usertypeid) {
-        this.usertypeid = usertypeid;
-    }
-
-    public UUID getTimeStamp() {
-        return timeStamp;
-    }
-
-    public void setTimeStamp(UUID timeStamp) {
-        this.timeStamp = timeStamp;
-    }
-
     public Date getEventTime() {
         return eventTime;
     }
@@ -182,7 +164,7 @@ public class User implements Serializable {
         this.eventTime = eventTime;
     }
 
-    public User(String internationalcode, String fullname, String password, String email, String address, String mobile, String telephone, byte[] avatar, byte[] carIdAvatar, Boolean isActive, Boolean isOnline, String ip, UUID usertypeid) {
+    public User(String internationalcode, String fullname, String password, String email, String address, String mobile, String telephone, byte[] avatar, byte[] carIdAvatar, Boolean isActive, Boolean isOnline, String ip) {
         this.eventTime = new Date();
         this.internationalcode = internationalcode;
         this.fullname = fullname;
@@ -196,64 +178,5 @@ public class User implements Serializable {
         this.isActive = isActive;
         this.isOnline = isOnline;
         this.ip = ip;
-        this.usertypeid = usertypeid;
-    }
-
-    public boolean isOnline() {
-        return isOnline;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", timeStamp=" + timeStamp +
-                ", eventTime=" + eventTime +
-                ", internationalcode='" + internationalcode + '\'' +
-                ", fullname='" + fullname + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", address='" + address + '\'' +
-                ", mobile='" + mobile + '\'' +
-                ", telephone='" + telephone + '\'' +
-                ", avatar=" + Arrays.toString(avatar) +
-                ", carIdAvatar=" + Arrays.toString(carIdAvatar) +
-                ", isActive=" + isActive +
-                ", isOnline=" + isOnline +
-                ", ip='" + ip + '\'' +
-                ", usertypeid=" + usertypeid +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
-        User user = (User) o;
-        return isOnline() == user.isOnline() &&
-                Objects.equals(getId(), user.getId()) &&
-                Objects.equals(getTimeStamp(), user.getTimeStamp()) &&
-                Objects.equals(getEventTime(), user.getEventTime()) &&
-                Objects.equals(getInternationalcode(), user.getInternationalcode()) &&
-                Objects.equals(getFullname(), user.getFullname()) &&
-                Objects.equals(getPassword(), user.getPassword()) &&
-                Objects.equals(getEmail(), user.getEmail()) &&
-                Objects.equals(getAddress(), user.getAddress()) &&
-                Objects.equals(getMobile(), user.getMobile()) &&
-                Objects.equals(getTelephone(), user.getTelephone()) &&
-                Arrays.equals(getAvatar(), user.getAvatar()) &&
-                Arrays.equals(getCarIdAvatar(), user.getCarIdAvatar()) &&
-                Objects.equals(isActive, user.isActive) &&
-                Objects.equals(getIp(), user.getIp()) &&
-                Objects.equals(getUsertypeid(), user.getUsertypeid());
-    }
-
-    @Override
-    public int hashCode() {
-
-        int result = Objects.hash(getId(), getTimeStamp(), getEventTime(), getInternationalcode(), getFullname(), getPassword(), getEmail(), getAddress(), getMobile(), getTelephone(), isActive, isOnline(), getIp(), getUsertypeid());
-        result = 31 * result + Arrays.hashCode(getAvatar());
-        result = 31 * result + Arrays.hashCode(getCarIdAvatar());
-        return result;
     }
 }

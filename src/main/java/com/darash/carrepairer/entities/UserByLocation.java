@@ -1,12 +1,8 @@
 package com.darash.carrepairer.entities;
 
-import com.datastax.driver.core.DataType;
-import com.datastax.driver.core.UDTValue;
 import com.datastax.driver.core.utils.UUIDs;
-
 import org.springframework.data.cassandra.core.cql.Ordering;
 import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
-import org.springframework.data.cassandra.core.mapping.CassandraType;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.core.mapping.Table;
@@ -28,7 +24,6 @@ public class UserByLocation implements Serializable {
 
     @Column
     private String location;
-
 
     @Deprecated
     public UserByLocation() {

@@ -1,10 +1,10 @@
 package com.darash.carrepairer.repositories;
 
-import com.darash.carrepairer.entities.UserByLocation;
+import com.darash.carrepairer.entities.PitShop;
 import org.springframework.data.cassandra.repository.ReactiveCassandraRepository;
 
 import java.util.UUID;
 
-public interface LocationRepository extends ReactiveCassandraRepository<UserByLocation, UUID> {
+public interface PitShopRepository extends ReactiveCassandraRepository<PitShop, UUID> {
 
 }
