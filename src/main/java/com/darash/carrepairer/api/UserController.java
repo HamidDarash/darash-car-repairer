@@ -51,10 +51,10 @@ public class UserController {
         return userService.findOnlineUser();
     }
 
-    @RequestMapping(value = "/getusertype/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    private Mono<UserType> getTypeUser(@PathVariable("id") UUID id) {
-        return userService.getUserType(id);
-    }
+//    @RequestMapping(value = "/getusertype/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+//    private Mono<UserType> getTypeUser(@PathVariable("id") UUID id) {
+//        return userService.getUserType(id);
+//    }
 
     @RequestMapping(value = "/getuserbymobile", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     private Flux<User> getUserByMobileSolrSearch(@PathParam("mobile") String mobile) {

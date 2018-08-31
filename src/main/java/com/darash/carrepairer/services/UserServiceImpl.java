@@ -3,25 +3,21 @@ package com.darash.carrepairer.services;
 import com.darash.carrepairer.entities.User;
 import com.darash.carrepairer.entities.UserType;
 import com.darash.carrepairer.repositories.UserRepository;
-import com.darash.carrepairer.repositories.UserTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final UserTypeRepository userTypeRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserTypeRepository userTypeRepository) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.userTypeRepository = userTypeRepository;
     }
 
     @Override
@@ -34,10 +30,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id);
     }
 
-    @Override
-    public Mono<UserType> getUserType(UUID id) {
-        return userTypeRepository.findById(id);
-    }
 
     @Override
     public Mono<User> saveOrUpdate(User user) {

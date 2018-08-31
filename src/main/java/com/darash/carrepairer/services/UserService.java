@@ -13,7 +13,7 @@ public interface UserService {
 
     Mono<User> findById(UUID id);
 
-    Mono<UserType> getUserType(UUID id);
+//    UserType getUserType(UUID id);
 
     Mono<User> saveOrUpdate(User user);
 

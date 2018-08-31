@@ -52,6 +52,17 @@ public class User implements Serializable {
     @Column
     private String ip;
 
+    @CassandraType(type = DataType.Name.INT)
+    private UserType userType;
+
+    public UserType getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
+    }
+
     public UUID getId() {
         return id;
     }

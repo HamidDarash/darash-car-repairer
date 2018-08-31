@@ -22,7 +22,7 @@ public class PitShop {
     @Column
     private String managername;
 
-    @Column
+    @PrimaryKeyColumn(name = "representationcode", ordinal = 1, type = PrimaryKeyType.PARTITIONED)
     private String representationcode;
 
     @Column
@@ -36,7 +36,6 @@ public class PitShop {
 
     @Column
     private boolean activate;
-
 
 
     @Column

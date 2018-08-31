@@ -5,6 +5,6 @@ import org.springframework.data.cassandra.repository.ReactiveCassandraRepository
 
 import java.util.UUID;
 
-public interface LocationRepository extends ReactiveCassandraRepository<UserByLocation, UUID> {
+public interface UserByLocationRepository extends ReactiveCassandraRepository<UserByLocation, UUID> {
 
 }

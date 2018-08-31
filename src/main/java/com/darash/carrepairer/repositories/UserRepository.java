@@ -1,6 +1,7 @@
 package com.darash.carrepairer.repositories;
 
 import com.darash.carrepairer.entities.User;
+import com.darash.carrepairer.entities.UserType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.cassandra.repository.AllowFiltering;
@@ -29,4 +30,6 @@ public interface UserRepository extends ReactiveCassandraRepository<User, UUID> 
     @Async
     @AllowFiltering
     Flux<User> findByMobileBySolr(String mobile);
+
+    Mono<User> findById(UUID uuid);
 }

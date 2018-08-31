@@ -1,8 +1,10 @@
 package com.darash.carrepairer.entities;
 
+import com.datastax.driver.core.DataType;
 import com.datastax.driver.core.utils.UUIDs;
 import org.springframework.data.cassandra.core.cql.Ordering;
 import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
+import org.springframework.data.cassandra.core.mapping.CassandraType;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.core.mapping.Table;
@@ -19,22 +21,39 @@ public class UserRequestByLocation {
     private Date eventTime;
 
     @Column
+    private UUID user_id;
+
+    @Column
+    private UUID repairer_id;
+
+    @Column
     private String location;
 
-    @Column
-    private boolean accept;
-
-    @Column
-    private boolean cancel;
-
-    @Column
-    private int status;
+    @CassandraType(type = DataType.Name.INT)
+    private RequestStatus status;
 
     @Column
     private int errorcode;
 
+
     @Deprecated
     public UserRequestByLocation() {
+    }
+
+    public UUID getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(UUID user_id) {
+        this.user_id = user_id;
+    }
+
+    public UUID getRepairer_id() {
+        return repairer_id;
+    }
+
+    public void setRepairer_id(UUID repairer_id) {
+        this.repairer_id = repairer_id;
     }
 
     public int getErrorcode() {
@@ -65,28 +84,11 @@ public class UserRequestByLocation {
         this.location = location;
     }
 
-    public boolean isAccept() {
-        return accept;
-    }
-
-    public void setAccept(boolean accept) {
-        this.accept = accept;
-    }
-
-
-    public boolean isCancel() {
-        return cancel;
-    }
-
-    public void setCancel(boolean cancel) {
-        this.cancel = cancel;
-    }
-
-    public int getStatus() {
+    public RequestStatus getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(RequestStatus status) {
         this.status = status;
     }
 

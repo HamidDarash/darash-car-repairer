@@ -1,8 +1,7 @@
 package com.darash.carrepairer;
 
-import com.darash.carrepairer.repositories.LocationRepository;
+import com.darash.carrepairer.repositories.UserByLocationRepository;
 import com.darash.carrepairer.repositories.UserRepository;
-import com.darash.carrepairer.repositories.UserTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,14 +19,12 @@ import org.springframework.data.cassandra.repository.config.EnableReactiveCassan
 public class DarashCarRepairerApplication {
 
     private final UserRepository userRepository;
-    private final UserTypeRepository userTypeRepository;
-    private final LocationRepository locationRepository;
+    private final UserByLocationRepository userByLocationRepository;
 
     @Autowired
-    public DarashCarRepairerApplication(UserRepository userRepository, UserTypeRepository userTypeRepository, LocationRepository locationRepository) {
+    public DarashCarRepairerApplication(UserRepository userRepository, UserByLocationRepository userByLocationRepository) {
         this.userRepository = userRepository;
-        this.userTypeRepository = userTypeRepository;
-        this.locationRepository = locationRepository;
+        this.userByLocationRepository = userByLocationRepository;
     }
 
     public static void main(String[] args) {
