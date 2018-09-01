@@ -23,6 +23,9 @@ public class PitShop {
     @Column
     private String managername;
 
+    @Column
+    private String fullname;
+
     @PrimaryKeyColumn(name = "representationcode", ordinal = 1, type = PrimaryKeyType.PARTITIONED)
     private String representationcode;
 
@@ -100,52 +103,34 @@ public class PitShop {
         this.representationServices = representationServices;
     }
 
-    @Deprecated
-    public PitShop() {
+    public String getFullname() {
+        return fullname;
     }
 
-    public PitShop(String managername, String representationcode, String location, Byte[] picturepreview, String describtion, List<RepresentationService> representationServices) {
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
+
+    public boolean isActivate() {
+        return activate;
+    }
+
+    public void setActivate(boolean activate) {
+        this.activate = activate;
+    }
+
+//    @Deprecated
+//    public PitShop() {
+//    }
+
+    public PitShop(String managername, String fullname, String representationcode, String location, Byte[] picturepreview, String describtion, boolean activate, List<RepresentationService> representationServices) {
         this.managername = managername;
+        this.fullname = fullname;
         this.representationcode = representationcode;
         this.location = location;
         this.picturepreview = picturepreview;
         this.describtion = describtion;
+        this.activate = activate;
         this.representationServices = representationServices;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof PitShop)) return false;
-        PitShop pitShop = (PitShop) o;
-        return Objects.equals(getId(), pitShop.getId()) &&
-                Objects.equals(getManagername(), pitShop.getManagername()) &&
-                Objects.equals(getRepresentationcode(), pitShop.getRepresentationcode()) &&
-                Objects.equals(getLocation(), pitShop.getLocation()) &&
-                Arrays.equals(getPicturepreview(), pitShop.getPicturepreview()) &&
-                Objects.equals(getDescribtion(), pitShop.getDescribtion()) &&
-                Objects.equals(getRepresentationServices(), pitShop.getRepresentationServices()) &&
-                Objects.equals(alternative, pitShop.alternative);
-    }
-
-    @Override
-    public int hashCode() {
-
-        int result = Objects.hash(getId(), getManagername(), getRepresentationcode(), getLocation(), getDescribtion(), getRepresentationServices(), alternative);
-        result = 31 * result + Arrays.hashCode(getPicturepreview());
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "PitShop{" +
-                "id=" + id +
-                ", managername='" + managername + '\'' +
-                ", representationcode='" + representationcode + '\'' +
-                ", location='" + location + '\'' +
-                ", picturepreview=" + Arrays.toString(picturepreview) +
-                ", describtion='" + describtion + '\'' +
-                ", representationServices=" + representationServices +
-                '}';
     }
 }

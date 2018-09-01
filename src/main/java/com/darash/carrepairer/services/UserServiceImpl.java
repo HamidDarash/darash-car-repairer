@@ -33,9 +33,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Mono<User> saveOrUpdate(User user) {
-        Mono<User> userMono = userRepository.save(user);
-        userMono.subscribe(System.out::println);
-        return userMono;
+        return userRepository.save(user);
     }
 
     @Override
