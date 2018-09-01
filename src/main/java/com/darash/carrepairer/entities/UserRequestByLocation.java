@@ -8,17 +8,14 @@ import org.springframework.data.cassandra.core.mapping.CassandraType;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.core.mapping.Table;
-import java.util.Date;
-import java.util.Objects;
+
 import java.util.UUID;
 
 @Table(value = "repair_request_by_location")
 public class UserRequestByLocation {
-    @PrimaryKeyColumn(name = "id", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
+    @PrimaryKeyColumn(name = "id", ordinal = 0, type = PrimaryKeyType.CLUSTERED, ordering = Ordering.DESCENDING)
     private UUID id = UUIDs.random();
 
-    @PrimaryKeyColumn(name = "event_time", ordinal = 1, type = PrimaryKeyType.CLUSTERED, ordering = Ordering.DESCENDING)
-    private Date eventTime;
 
     @Column
     private UUID user_id;
@@ -26,7 +23,7 @@ public class UserRequestByLocation {
     @Column
     private UUID repairer_id;
 
-    @Column
+    @PrimaryKeyColumn(name = "location", ordinal = 2, type = PrimaryKeyType.PARTITIONED)
     private String location;
 
     @CassandraType(type = DataType.Name.INT)
@@ -38,6 +35,14 @@ public class UserRequestByLocation {
 
     @Deprecated
     public UserRequestByLocation() {
+    }
+
+    public UserRequestByLocation(UUID user_id, UUID repairer_id, String location, RequestStatus status, int errorcode) {
+        this.user_id = user_id;
+        this.repairer_id = repairer_id;
+        this.location = location;
+        this.status = status;
+        this.errorcode = errorcode;
     }
 
     public UUID getUser_id() {
@@ -70,10 +75,6 @@ public class UserRequestByLocation {
 
     public void setId(UUID id) {
         this.id = id;
-    }
-
-    public Date getEventTime() {
-        return eventTime;
     }
 
     public String getLocation() {

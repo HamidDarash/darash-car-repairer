@@ -13,4 +13,5 @@ public class Rate {
     private UUID id = UUIDs.random();
 
 
+
 }

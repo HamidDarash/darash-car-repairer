@@ -3,6 +3,7 @@ package com.darash.carrepairer.entities;
 import com.datastax.driver.core.DataType;
 import com.datastax.driver.core.UDTValue;
 import com.datastax.driver.core.utils.UUIDs;
+import org.springframework.data.cassandra.core.cql.Ordering;
 import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
 import org.springframework.data.cassandra.core.mapping.CassandraType;
 import org.springframework.data.cassandra.core.mapping.Column;
@@ -16,7 +17,7 @@ import java.util.UUID;
 
 @Table(value = "pit_shops")
 public class PitShop {
-    @PrimaryKeyColumn(name = "id", ordinal = 0, type = PrimaryKeyType.CLUSTERED)
+    @PrimaryKeyColumn(name = "id", ordinal = 0, type = PrimaryKeyType.CLUSTERED , ordering = Ordering.DESCENDING)
     private UUID id = UUIDs.random();
 
     @Column
@@ -36,7 +37,6 @@ public class PitShop {
 
     @Column
     private boolean activate;
-
 
     @Column
     private List<RepresentationService> representationServices;
