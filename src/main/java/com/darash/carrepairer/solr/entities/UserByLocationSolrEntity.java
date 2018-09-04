@@ -16,6 +16,11 @@ public class UserByLocationSolrEntity {
     @Indexed(name = "location",type = "String")
     private String location;
 
+    @Indexed(name = "user_id",type = "String")
+    private String user_id;
+
+
+
     public String getId() {
         return id;
     }
@@ -31,4 +36,14 @@ public class UserByLocationSolrEntity {
     public void setLocation(String location) {
         this.location = location;
     }
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
+    }
+
+
 }

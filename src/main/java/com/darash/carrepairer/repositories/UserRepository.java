@@ -26,10 +26,5 @@ public interface UserRepository extends ReactiveCassandraRepository<User, UUID> 
     @Override
     Mono<Void> delete(User user);
 
-    @Query("select * from users where solr_query = '{\"q\":\"mobile: ?0\"}'")
-    @Async
-    @AllowFiltering
-    Flux<User> findByMobileBySolr(String mobile);
-
     Mono<User> findById(UUID uuid);
 }
