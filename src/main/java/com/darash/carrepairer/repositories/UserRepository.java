@@ -1,18 +1,13 @@
 package com.darash.carrepairer.repositories;
 
 import com.darash.carrepairer.entities.User;
-import com.darash.carrepairer.entities.UserType;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.cassandra.repository.AllowFiltering;
 import org.springframework.data.cassandra.repository.Query;
 import org.springframework.data.cassandra.repository.ReactiveCassandraRepository;
-import org.springframework.data.repository.query.Param;
-import org.springframework.scheduling.annotation.Async;
+import org.springframework.data.domain.Page;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.Optional;
+import java.awt.print.Pageable;
 import java.util.UUID;
 
 public interface UserRepository extends ReactiveCassandraRepository<User, UUID> {
@@ -23,8 +18,9 @@ public interface UserRepository extends ReactiveCassandraRepository<User, UUID> 
     @Override
     <S extends User> Mono<S> save(S s);
 
-    @Override
-    Mono<Void> delete(User user);
+    Mono<Void> delete(UUID uuid);
 
     Mono<User> findById(UUID uuid);
+
+    Flux<Page<User>> findAll(Pageable pageable);
 }

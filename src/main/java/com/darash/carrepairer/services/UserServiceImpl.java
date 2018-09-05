@@ -3,12 +3,14 @@ package com.darash.carrepairer.services;
 import com.darash.carrepairer.entities.User;
 import com.darash.carrepairer.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.awt.print.Pageable;
 import java.util.UUID;
 
 @Service
@@ -55,10 +57,18 @@ public class UserServiceImpl implements UserService {
                 .defaultIfEmpty(ResponseEntity.noContent().build());
     }
 
+    @Override
+    public Mono<ResponseEntity<Void>> delete(UUID uuid) {
+        return userRepository.findById(uuid)
+                .flatMap(exist -> userRepository.delete(exist)
+                        .then(Mono.just(new ResponseEntity<Void>(HttpStatus.OK))))
+                .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
 
     @Override
-    public void delete(User user) {
-        final Mono<Void> delete = userRepository.delete(user);
-        delete.subscribe();
+    public Flux<ResponseEntity<Page<User>>> findAll(Pageable pageable) {
+        return userRepository.findAll(pageable)
+                .map(items -> ResponseEntity.ok(items))
+                .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 }

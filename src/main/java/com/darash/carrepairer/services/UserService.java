@@ -1,12 +1,12 @@
 package com.darash.carrepairer.services;
 
 import com.darash.carrepairer.entities.User;
-import com.darash.carrepairer.entities.UserType;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.Optional;
+import java.awt.print.Pageable;
 import java.util.UUID;
 
 public interface UserService {
@@ -14,11 +14,12 @@ public interface UserService {
 
     Mono<ResponseEntity<User>> findById(UUID id);
 
-//    UserType getUserType(UUID id);
-
     Mono<User> save(User user);
 
-    Mono<ResponseEntity<User>> update(UUID id , User newInfo);
+    Mono<ResponseEntity<User>> update(UUID id, User newInfo);
 
-    void delete(User user);
+    Mono<ResponseEntity<Void>> delete(UUID id);
+
+    Flux<ResponseEntity<Page<User>>> findAll(Pageable pageable);
+
 }
