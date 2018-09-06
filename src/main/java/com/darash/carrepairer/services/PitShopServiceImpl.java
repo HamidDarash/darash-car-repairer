@@ -3,6 +3,10 @@ package com.darash.carrepairer.services;
 import com.darash.carrepairer.entities.PitShop;
 import com.darash.carrepairer.repositories.PitShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -20,30 +24,31 @@ public class PitShopServiceImpl implements PitShopService {
     }
 
     @Override
-    public Flux<PitShop> findActivtePitShop() {
-        return pitShopRepository.findByActivate(true);
+    public Flux<ResponseEntity<Page<PitShop>>> findActivtePitShop(Boolean aBoolean, Pageable pageable) {
+        return pitShopRepository.findByActivate(aBoolean, pageable)
+                .map(ResponseEntity::ok)
+                .defaultIfEmpty(ResponseEntity.noContent().build());
     }
 
     @Override
-    public Mono<PitShop> findById(UUID id) {
-        return pitShopRepository.findById(id);
+    public Mono<ResponseEntity<PitShop>> findById(UUID id) {
+        return pitShopRepository.findById(id).map(ResponseEntity::ok).defaultIfEmpty(ResponseEntity.noContent().build());
     }
 
     @Override
-    public Mono<PitShop> saveOrUpdate(PitShop pitShop) {
-        Mono<PitShop> pitShopMono = pitShopRepository.save(pitShop);
-        pitShopMono.subscribe(System.out::println);
-        return pitShopMono;
+    public Mono<PitShop> save(PitShop pitShop) {
+        return pitShopRepository.save(pitShop);
     }
 
     @Override
-    public Flux<PitShop> findByFullName(String fullname) {
-        return pitShopRepository.findByFullname(fullname);
+    public Flux<ResponseEntity<Page<PitShop>>> findByFullName(String fullname,Pageable pageable) {
+        return pitShopRepository.findByFullname(fullname,pageable).map(ResponseEntity::ok).defaultIfEmpty(ResponseEntity.noContent().build());
     }
 
     @Override
-    public void delete(PitShop pitShop) {
-        final Mono<Void> pitShopMono = pitShopRepository.delete(pitShop);
-        pitShopMono.subscribe();
+    public Mono<ResponseEntity<Void>> delete(UUID id) {
+        return pitShopRepository.findById(id)
+                .flatMap(existItem -> pitShopRepository.delete(existItem).then(Mono.just(new ResponseEntity<Void>(HttpStatus.OK))))
+                .defaultIfEmpty(ResponseEntity.noContent().build());
     }
 }

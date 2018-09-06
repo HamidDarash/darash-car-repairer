@@ -4,6 +4,8 @@ import com.darash.carrepairer.entities.PitShop;
 import com.darash.carrepairer.entities.UserByLocation;
 import com.darash.carrepairer.repositories.UserByLocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import reactor.core.publisher.Mono;
 
 import java.util.UUID;
@@ -17,22 +19,35 @@ public class UserByLocationImpl implements UserByLocationService {
         this.userByLocationRepository = userByLocationRepository;
     }
 
-
     @Override
-    public Mono<UserByLocation> findByUserId(UUID id) {
-        return userByLocationRepository.findByUser_id(id);
+    public Mono<ResponseEntity<UserByLocation>> findByUserId(UUID user_id) {
+        return userByLocationRepository.findByUser_id(user_id)
+                .map(ResponseEntity::ok)
+                .defaultIfEmpty(ResponseEntity.noContent().build());
     }
 
     @Override
-    public Mono<UserByLocation> saveOrUpdate(UserByLocation userByLocation) {
-        Mono<UserByLocation> userByLocationMono = userByLocationRepository.save(userByLocation);
-        userByLocationMono.subscribe(System.out::println);
-        return userByLocationMono;
+    public Mono<UserByLocation> save(UserByLocation userByLocation) {
+        return userByLocationRepository.save(userByLocation);
     }
 
     @Override
-    public void delete(UserByLocation userByLocation) {
-       Mono<Void> voidMono = userByLocationRepository.delete(userByLocation);
-       voidMono.subscribe(System.out::println);
+    public Mono<ResponseEntity<UserByLocation>> update(UUID id, UserByLocation userByLocation) {
+        return userByLocationRepository.findById(id)
+                .flatMap(editItem -> {
+                    editItem.setLocation(userByLocation.getLocation());
+                    editItem.setUser_id(userByLocation.getUser_id());
+                    return userByLocationRepository.save(editItem);
+                })
+                .map(Update -> new ResponseEntity<>(Update, HttpStatus.OK))
+                .defaultIfEmpty(ResponseEntity.noContent().build());
+    }
+
+    @Override
+    public Mono<ResponseEntity<Void>> delete(UUID id) {
+        return userByLocationRepository.findById(id)
+                .flatMap(existItem -> userByLocationRepository.delete(existItem)
+                        .then(Mono.just(new ResponseEntity<Void>(HttpStatus.OK))))
+                .defaultIfEmpty(ResponseEntity.noContent().build());
     }
 }

@@ -2,16 +2,19 @@ package com.darash.carrepairer.services;
 
 import com.darash.carrepairer.entities.PitShop;
 import com.darash.carrepairer.entities.UserByLocation;
+import org.springframework.http.ResponseEntity;
 import reactor.core.publisher.Mono;
 
 import java.util.UUID;
 
 public interface UserByLocationService {
 
-    Mono<UserByLocation> findByUserId(UUID id);
+    Mono<ResponseEntity<UserByLocation>> findByUserId(UUID user_id);
 
-    Mono<UserByLocation> saveOrUpdate(UserByLocation userByLocation);
+    Mono<UserByLocation> save(UserByLocation userByLocation);
 
-    void delete(UserByLocation userByLocation);
+    Mono<ResponseEntity<UserByLocation>> update(UUID id, UserByLocation userByLocation);
+
+    Mono<ResponseEntity<Void>> delete(UUID id);
 
 }

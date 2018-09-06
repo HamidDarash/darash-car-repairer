@@ -11,6 +11,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.awt.print.Pageable;
+import java.util.Date;
 import java.util.UUID;
 
 @Service
@@ -27,13 +28,13 @@ public class UserServiceImpl implements UserService {
     public Flux<ResponseEntity<User>> findOnlineUser() {
 
         return userRepository.findByIsOnline(true)
-                .map(finded -> ResponseEntity.ok(finded))
+                .map(ResponseEntity::ok)
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
     @Override
     public Mono<ResponseEntity<User>> findById(UUID id) {
-        return userRepository.findById(id).map(finded -> ResponseEntity.ok(finded))
+        return userRepository.findById(id).map(ResponseEntity::ok)
                 .defaultIfEmpty(ResponseEntity.noContent().build());
     }
 
@@ -51,7 +52,16 @@ public class UserServiceImpl implements UserService {
                     ExistUser.setAddress(newInfo.getAddress());
                     ExistUser.setAvatar(newInfo.getAvatar());
                     ExistUser.setCarIdAvatar(newInfo.getCarIdAvatar());
-                    return userRepository.save(newInfo);
+                    ExistUser.setEmail(newInfo.getEmail());
+                    ExistUser.setEventTime(new Date());
+                    ExistUser.setFullname(newInfo.getFullname());
+                    ExistUser.setInternationalcode(newInfo.getInternationalcode());
+                    ExistUser.setIp(newInfo.getIp());
+                    ExistUser.setMobile(newInfo.getMobile());
+                    ExistUser.setOnline(newInfo.getOnline());
+                    ExistUser.setTelephone(newInfo.getTelephone());
+                    ExistUser.setUserType(newInfo.getUserType());
+                    return userRepository.save(ExistUser);
                 })
                 .map(Update -> new ResponseEntity<>(Update, HttpStatus.OK))
                 .defaultIfEmpty(ResponseEntity.noContent().build());
@@ -68,7 +78,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Flux<ResponseEntity<Page<User>>> findAll(Pageable pageable) {
         return userRepository.findAll(pageable)
-                .map(items -> ResponseEntity.ok(items))
+                .map(ResponseEntity::ok)
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 }

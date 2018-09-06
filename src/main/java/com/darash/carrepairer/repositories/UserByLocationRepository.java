@@ -10,9 +10,11 @@ import java.util.UUID;
 
 public interface UserByLocationRepository extends ReactiveCassandraRepository<UserByLocation, UUID> {
 
+
     Mono<UserByLocation> findById(UUID id);
 
-    Mono<UserByLocation> findByUser_id(UUID uuid);
+    @Query("select * from user_by_location where user_id = ? order by id desc limit 1")
+    Mono<UserByLocation> findByUser_id(UUID user_id);
 
     @Override
     <S extends UserByLocation> Mono<S> save(S s);
