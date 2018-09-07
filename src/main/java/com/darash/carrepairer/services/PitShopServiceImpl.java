@@ -41,8 +41,8 @@ public class PitShopServiceImpl implements PitShopService {
     }
 
     @Override
-    public Flux<ResponseEntity<Page<PitShop>>> findByFullName(String fullname,Pageable pageable) {
-        return pitShopRepository.findByFullname(fullname,pageable).map(ResponseEntity::ok).defaultIfEmpty(ResponseEntity.noContent().build());
+    public Flux<ResponseEntity<Page<PitShop>>> findByFullName(String fullname, Pageable pageable) {
+        return pitShopRepository.findByFullname(fullname, pageable).map(ResponseEntity::ok).defaultIfEmpty(ResponseEntity.noContent().build());
     }
 
     @Override

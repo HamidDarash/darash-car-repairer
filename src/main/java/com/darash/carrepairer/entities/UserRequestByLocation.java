@@ -11,11 +11,10 @@ import org.springframework.data.cassandra.core.mapping.Table;
 
 import java.util.UUID;
 
-@Table(value = "repair_request_by_location")
+@Table(value = "user_request_by_location")
 public class UserRequestByLocation {
     @PrimaryKeyColumn(name = "id", ordinal = 0, type = PrimaryKeyType.CLUSTERED, ordering = Ordering.DESCENDING)
     private UUID id = UUIDs.random();
-
 
     @Column
     private UUID user_id;
@@ -31,7 +30,6 @@ public class UserRequestByLocation {
 
     @Column
     private int errorcode;
-
 
     @Deprecated
     public UserRequestByLocation() {

@@ -10,6 +10,7 @@ import com.darash.carrepairer.solr.repositories.UserByLocationSolrRepository;
 import com.darash.carrepairer.solr.repositories.UserSolrRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,7 +45,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/useronline", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    private Flux<User> getUserOnline() {
+    private Flux<ResponseEntity<User>> getUserOnline() {
 //        return userService.findOnlineUser().map(ResponseEntity::ok).defaultIfEmpty(
 //                new ResponseEntity<>(HttpStatus.NOT_FOUND)
 //        );
@@ -56,10 +57,10 @@ public class UserController {
 //        return userService.getUserType(id);
 //    }
 
-    @RequestMapping(value = "/getuserbymobile", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    private Flux<User> getUserByMobileSolrSearch(@PathParam("mobile") String mobile) {
-        return userRepository.findByMobileBySolr(mobile);
-    }
+//    @RequestMapping(value = "/getuserbymobile", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+//    private Flux<User> getUserByMobileSolrSearch(@PathParam("mobile") String mobile) {
+//        return userRepository.findByMobileBySolr(mobile);
+//    }
 
 
     @RequestMapping(value = "/locations/{location}")

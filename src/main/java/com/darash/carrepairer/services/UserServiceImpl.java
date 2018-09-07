@@ -4,13 +4,13 @@ import com.darash.carrepairer.entities.User;
 import com.darash.carrepairer.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.awt.print.Pageable;
 import java.util.Date;
 import java.util.UUID;
 
@@ -25,9 +25,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Flux<ResponseEntity<User>> findOnlineUser() {
-
-        return userRepository.findByIsOnline(true)
+    public Flux<ResponseEntity<Page<User>>> findOnlineUser(Pageable pageable) {
+        return userRepository.findByIsOnline(true, pageable)
                 .map(ResponseEntity::ok)
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }

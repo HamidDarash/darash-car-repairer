@@ -1,7 +1,6 @@
 package com.darash.carrepairer.repositories;
 
 import com.darash.carrepairer.entities.UserByLocation;
-import org.reactivestreams.Publisher;
 import org.springframework.data.cassandra.repository.Query;
 import org.springframework.data.cassandra.repository.ReactiveCassandraRepository;
 import reactor.core.publisher.Mono;
@@ -13,7 +12,7 @@ public interface UserByLocationRepository extends ReactiveCassandraRepository<Us
 
     Mono<UserByLocation> findById(UUID id);
 
-    @Query("select * from user_by_location where user_id = ? order by id desc limit 1")
+    @Query("select * from user_by_location where user_id = 0? order by id desc limit 1")
     Mono<UserByLocation> findByUser_id(UUID user_id);
 
     @Override

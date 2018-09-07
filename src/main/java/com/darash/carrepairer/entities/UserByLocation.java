@@ -19,7 +19,7 @@ public class UserByLocation implements Serializable {
     @Column
     private UUID user_id;
 
-    @PrimaryKeyColumn(name = "location", ordinal = 2, type = PrimaryKeyType.PARTITIONED)
+    @PrimaryKeyColumn(name = "location", ordinal = 1, type = PrimaryKeyType.PARTITIONED)
     private String location;
 
     @Deprecated

@@ -1,7 +1,6 @@
 package com.darash.carrepairer.repositories;
 
 import com.darash.carrepairer.entities.PitShop;
-import org.reactivestreams.Publisher;
 import org.springframework.data.cassandra.repository.ReactiveCassandraRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,7 +19,7 @@ public interface PitShopRepository extends ReactiveCassandraRepository<PitShop, 
     @Override
     Mono<PitShop> findById(UUID uuid);
 
-    Flux<Page<PitShop>> findByFullname(String fullname,Pageable pageable);
+    Flux<Page<PitShop>> findByFullname(String fullname, Pageable pageable);
 
 
 }

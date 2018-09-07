@@ -1,6 +1,5 @@
 package com.darash.carrepairer.services;
 
-import com.darash.carrepairer.entities.PitShop;
 import com.darash.carrepairer.entities.UserByLocation;
 import com.darash.carrepairer.repositories.UserByLocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
