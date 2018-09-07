@@ -1,7 +1,6 @@
 package com.darash.carrepairer.api;
 
 import com.darash.carrepairer.entities.User;
-import com.darash.carrepairer.entities.UserType;
 import com.darash.carrepairer.repositories.UserRepository;
 import com.darash.carrepairer.services.UserService;
 import com.darash.carrepairer.solr.entities.UserByLocationSolrEntity;
@@ -9,6 +8,8 @@ import com.darash.carrepairer.solr.entities.UsersSolrEntity;
 import com.darash.carrepairer.solr.repositories.UserByLocationSolrRepository;
 import com.darash.carrepairer.solr.repositories.UserSolrRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,12 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
-import javax.websocket.server.PathParam;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
@@ -45,32 +43,18 @@ public class UserController {
     }
 
     @RequestMapping(value = "/useronline", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    private Flux<ResponseEntity<User>> getUserOnline() {
-//        return userService.findOnlineUser().map(ResponseEntity::ok).defaultIfEmpty(
-//                new ResponseEntity<>(HttpStatus.NOT_FOUND)
-//        );
-        return userService.findOnlineUser();
+    private Flux<ResponseEntity<Page<User>>> getUserOnline(Pageable pageable) {
+        return userService.findOnlineUser(pageable);
     }
-
-//    @RequestMapping(value = "/getusertype/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-//    private Mono<UserType> getTypeUser(@PathVariable("id") UUID id) {
-//        return userService.getUserType(id);
-//    }
-
-//    @RequestMapping(value = "/getuserbymobile", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-//    private Flux<User> getUserByMobileSolrSearch(@PathParam("mobile") String mobile) {
-//        return userRepository.findByMobileBySolr(mobile);
-//    }
-
 
     @RequestMapping(value = "/locations/{location}")
     private List<UserByLocationSolrEntity> userByLocationSolrEntities(@PathVariable("location") String Location) {
         return userByLocationSolrRepository.DistanceAroundLocation(Location);
     }
 
-    @RequestMapping(value = "/findfullname/{s}")
-    private Optional<UsersSolrEntity> usersSolrEntityfindFullname(@PathVariable("s") String s) {
-        return userSolrRepository.findByFullname(s);
+    @RequestMapping(value = "/findfullname/{fullname}")
+    private Optional<UsersSolrEntity> usersSolrEntityfindFullname(@PathVariable("fullname") String fullname) {
+        return userSolrRepository.findByFullname(fullname);
     }
 
 }
