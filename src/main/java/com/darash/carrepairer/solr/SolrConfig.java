@@ -15,7 +15,7 @@ public class SolrConfig {
 
     @Bean
     public SolrClient solrClient() {
-        return new HttpSolrClient("http://192.168.1.8:8983/solr");
+        return new HttpSolrClient("http://192.168.1.3:8983/solr");
     }
 
     @Bean
