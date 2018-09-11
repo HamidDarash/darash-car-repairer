@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public interface PitShopRepository extends ReactiveCassandraRepository<PitShop, UUID> {
 
-    Flux<Page<PitShop>> findByActivate(Boolean aBoolean, Pageable pageable);
+//    Flux<Page<PitShop>> findByActivate(Boolean aBoolean, Pageable pageable);
 
     @Override
     <S extends PitShop> Mono<S> save(S s);
@@ -19,7 +19,9 @@ public interface PitShopRepository extends ReactiveCassandraRepository<PitShop, 
     @Override
     Mono<PitShop> findById(UUID uuid);
 
-    Flux<Page<PitShop>> findByFullname(String fullname, Pageable pageable);
+//    Flux<Page<PitShop>> findByFullname(String fullname, Pageable pageable);
 
 
+    @Override
+    Mono<Void> delete(PitShop pitShop);
 }

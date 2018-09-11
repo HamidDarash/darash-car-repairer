@@ -5,6 +5,7 @@ import com.darash.carrepairer.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Flux<ResponseEntity<Page<User>>> findOnlineUser(Pageable pageable) {
+    public Flux<ResponseEntity<Slice<User>>> findOnlineUser(Pageable pageable) {
         return userRepository.findByIsOnline(true, pageable)
                 .map(ResponseEntity::ok)
                 .defaultIfEmpty(ResponseEntity.notFound().build());
@@ -74,10 +75,10 @@ public class UserServiceImpl implements UserService {
                 .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @Override
-    public Flux<ResponseEntity<Page<User>>> findAll(Pageable pageable) {
-        return userRepository.findAll(pageable)
-                .map(ResponseEntity::ok)
-                .defaultIfEmpty(ResponseEntity.notFound().build());
-    }
+//    @Override
+//    public Flux<ResponseEntity<Page<User>>> findAll(Pageable pageable) {
+//        return userRepository.findAll(pageable)
+//                .map(ResponseEntity::ok)
+//                .defaultIfEmpty(ResponseEntity.notFound().build());
+//    }
 }

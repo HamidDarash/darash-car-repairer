@@ -5,6 +5,7 @@ import org.springframework.data.cassandra.repository.Query;
 import org.springframework.data.cassandra.repository.ReactiveCassandraRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -13,14 +14,15 @@ import java.util.UUID;
 public interface UserRepository extends ReactiveCassandraRepository<User, UUID> {
 
     @Query("select * from users where isonline = ?0 ALLOW FILTERING")
-    Flux<Page<User>> findByIsOnline(final boolean isonline, Pageable pageable);
+    Flux<Slice<User>> findByIsOnline(final boolean isonline, Pageable pageable);
 
     @Override
     <S extends User> Mono<S> save(S s);
 
-    Mono<Void> delete(UUID uuid);
+    @Override
+    Mono<Void> delete(User user);
 
     Mono<User> findById(UUID uuid);
 
-    Flux<Page<User>> findAll(Pageable pageable);
+//    Flux<Page<User>> findAll(Pageable pageable);
 }

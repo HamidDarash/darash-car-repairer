@@ -3,6 +3,7 @@ package com.darash.carrepairer.services;
 import com.darash.carrepairer.entities.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -10,7 +11,7 @@ import reactor.core.publisher.Mono;
 import java.util.UUID;
 
 public interface UserService {
-    Flux<ResponseEntity<Page<User>>> findOnlineUser(Pageable pageable);
+   Flux<ResponseEntity<Slice<User>>> findOnlineUser(Pageable pageable);
 
     Mono<ResponseEntity<User>> findById(UUID id);
 
@@ -20,6 +21,6 @@ public interface UserService {
 
     Mono<ResponseEntity<Void>> delete(UUID id);
 
-    Flux<ResponseEntity<Page<User>>> findAll(Pageable pageable);
+//    Flux<ResponseEntity<Page<User>>> findAll(Pageable pageable);
 
 }

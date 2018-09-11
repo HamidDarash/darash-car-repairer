@@ -1,7 +1,6 @@
 package com.darash.carrepairer.api;
 
 import com.darash.carrepairer.entities.User;
-import com.darash.carrepairer.repositories.UserRepository;
 import com.darash.carrepairer.services.UserService;
 import com.darash.carrepairer.solr.entities.UserByLocationSolrEntity;
 import com.darash.carrepairer.solr.entities.UsersSolrEntity;
@@ -25,13 +24,11 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class UserController {
     private UserService userService;
-    private final UserRepository userRepository;
     private final UserSolrRepository userSolrRepository;
     private final UserByLocationSolrRepository userByLocationSolrRepository;
 
     @Autowired
-    public UserController(UserRepository userRepository, UserSolrRepository userSolrRepository, UserByLocationSolrRepository userByLocationSolrRepository) {
-        this.userRepository = userRepository;
+    public UserController(UserSolrRepository userSolrRepository, UserByLocationSolrRepository userByLocationSolrRepository) {
         this.userSolrRepository = userSolrRepository;
         this.userByLocationSolrRepository = userByLocationSolrRepository;
     }
@@ -42,10 +39,10 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/useronline", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    private Flux<ResponseEntity<Page<User>>> getUserOnline(Pageable pageable) {
-        return userService.findOnlineUser(pageable);
-    }
+//    @RequestMapping(value = "/useronline", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+//    private Flux<ResponseEntity<Page<User>>> getUserOnline(Pageable pageable) {
+//        return userService.findOnlineUser(pageable);
+//    }
 
     @RequestMapping(value = "/locations/{location}")
     private List<UserByLocationSolrEntity> userByLocationSolrEntities(@PathVariable("location") String Location) {

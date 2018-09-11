@@ -23,12 +23,12 @@ public class PitShopServiceImpl implements PitShopService {
         this.pitShopRepository = pitShopRepository;
     }
 
-    @Override
-    public Flux<ResponseEntity<Page<PitShop>>> findActivtePitShop(Boolean aBoolean, Pageable pageable) {
-        return pitShopRepository.findByActivate(aBoolean, pageable)
-                .map(ResponseEntity::ok)
-                .defaultIfEmpty(ResponseEntity.noContent().build());
-    }
+//    @Override
+//    public Flux<ResponseEntity<Page<PitShop>>> findActivtePitShop(Boolean aBoolean, Pageable pageable) {
+//        return pitShopRepository.findByActivate(aBoolean, pageable)
+//                .map(ResponseEntity::ok)
+//                .defaultIfEmpty(ResponseEntity.noContent().build());
+//    }
 
     @Override
     public Mono<ResponseEntity<PitShop>> findById(UUID id) {
@@ -40,10 +40,10 @@ public class PitShopServiceImpl implements PitShopService {
         return pitShopRepository.save(pitShop);
     }
 
-    @Override
-    public Flux<ResponseEntity<Page<PitShop>>> findByFullName(String fullname, Pageable pageable) {
-        return pitShopRepository.findByFullname(fullname, pageable).map(ResponseEntity::ok).defaultIfEmpty(ResponseEntity.noContent().build());
-    }
+//    @Override
+//    public Flux<ResponseEntity<Page<PitShop>>> findByFullName(String fullname, Pageable pageable) {
+//        return pitShopRepository.findByFullname(fullname, pageable).map(ResponseEntity::ok).defaultIfEmpty(ResponseEntity.noContent().build());
+//    }
 
     @Override
     public Mono<ResponseEntity<Void>> delete(UUID id) {

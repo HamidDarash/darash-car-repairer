@@ -1,7 +1,7 @@
 package com.darash.carrepairer.configuration;
 
 public class SchemaSetup extends RunCQLFile {
-    //    private static final String cqlFile = "cql/math.cql";
+    //    private static final String cqlFile = "cql/CreateIndex.cql";
     private String cqlFile;
 
     public SchemaSetup(String cqlFile) {
