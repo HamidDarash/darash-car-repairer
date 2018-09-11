@@ -18,10 +18,6 @@ public class RepresentationService {
         this.price = price;
     }
 
-    @Deprecated
-    public RepresentationService() {
-    }
-
     public UUID getId() {
         return id;
     }

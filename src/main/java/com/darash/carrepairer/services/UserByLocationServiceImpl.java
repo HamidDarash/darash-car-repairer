@@ -5,16 +5,18 @@ import com.darash.carrepairer.repositories.UserByLocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 import java.util.UUID;
 
-public class UserByLocationImpl implements UserByLocationService {
+@Service
+public class UserByLocationServiceImpl implements UserByLocationService {
 
     private final UserByLocationRepository userByLocationRepository;
 
     @Autowired
-    public UserByLocationImpl(UserByLocationRepository userByLocationRepository) {
+    public UserByLocationServiceImpl(UserByLocationRepository userByLocationRepository) {
         this.userByLocationRepository = userByLocationRepository;
     }
 
