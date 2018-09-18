@@ -9,6 +9,7 @@ import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.core.mapping.Table;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Table(value = "user_request_by_location")
@@ -22,8 +23,11 @@ public class UserRequestByLocation {
     @Column
     private UUID repairer_id;
 
-    @PrimaryKeyColumn(name = "location", ordinal = 2, type = PrimaryKeyType.PARTITIONED)
+    @Column
     private String location;
+
+    @PrimaryKeyColumn(name = "event_date_time", ordinal = 1, type = PrimaryKeyType.PARTITIONED, ordering = Ordering.DESCENDING)
+    private Date event_date_time;
 
     @CassandraType(type = DataType.Name.INT)
     private RequestStatus status;
@@ -41,6 +45,7 @@ public class UserRequestByLocation {
         this.location = location;
         this.status = status;
         this.errorcode = errorcode;
+        this.event_date_time = new Date();
     }
 
     public UUID getUser_id() {
@@ -91,4 +96,11 @@ public class UserRequestByLocation {
         this.status = status;
     }
 
+    public Date getEvent_date_time() {
+        return event_date_time;
+    }
+
+    public void setEvent_date_time(Date event_date_time) {
+        this.event_date_time = event_date_time;
+    }
 }

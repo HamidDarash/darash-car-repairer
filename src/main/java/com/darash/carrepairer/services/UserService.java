@@ -21,6 +21,7 @@ public interface UserService {
 
     Mono<ResponseEntity<Void>> delete(UUID id);
 
-//    Flux<ResponseEntity<Page<User>>> findAll(Pageable pageable);
+    Flux<ResponseEntity<Slice<User>>> findAll(Pageable pageable);
 
+//    Mono<ResponseEntity<Void>> deleteAllByUser_id(UUID uuid);
 }

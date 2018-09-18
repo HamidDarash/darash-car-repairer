@@ -1,9 +1,10 @@
 package com.darash.carrepairer.services;
 
 import com.darash.carrepairer.entities.User;
+import com.darash.carrepairer.entities.UserByLocation;
+import com.darash.carrepairer.repositories.UserByLocationRepository;
 import com.darash.carrepairer.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
@@ -19,10 +20,12 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final UserByLocationRepository userByLocationRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository , UserByLocationRepository userByLocationRepository) {
         this.userRepository = userRepository;
+        this.userByLocationRepository = userByLocationRepository;
     }
 
     @Override
@@ -75,10 +78,19 @@ public class UserServiceImpl implements UserService {
                 .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @Override
+    public Flux<ResponseEntity<Slice<User>>> findAll(Pageable pageable) {
+        return userRepository.findAll(pageable)
+                .map(ResponseEntity::ok)
+                .defaultIfEmpty(ResponseEntity.notFound().build());
+    }
+
 //    @Override
-//    public Flux<ResponseEntity<Page<User>>> findAll(Pageable pageable) {
-//        return userRepository.findAll(pageable)
-//                .map(ResponseEntity::ok)
+//    public Mono<ResponseEntity<Void>> deleteAllByUser_id(UUID uuid) {
+//        return userByLocationRepository.deleteAllByUser_id(uuid)
+//                .then(Mono.just(new ResponseEntity<Void>(HttpStatus.OK)))
 //                .defaultIfEmpty(ResponseEntity.notFound().build());
 //    }
+
+
 }

@@ -8,6 +8,7 @@ import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.core.mapping.Table;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.UUID;
 
 @Table(value = "user_by_location")
@@ -19,8 +20,11 @@ public class UserByLocation implements Serializable {
     @Column
     private UUID user_id;
 
-    @PrimaryKeyColumn(name = "location", ordinal = 1, type = PrimaryKeyType.PARTITIONED)
+    @Column
     private String location;
+
+    @PrimaryKeyColumn(name = "event_date_time", ordinal = 1, type = PrimaryKeyType.PARTITIONED, ordering = Ordering.DESCENDING)
+    private Date event_date_time;
 
     @Deprecated
     public UserByLocation() {
@@ -29,6 +33,7 @@ public class UserByLocation implements Serializable {
     public UserByLocation(UUID user_id, String location) {
         this.user_id = user_id;
         this.location = location;
+        this.event_date_time = new Date();
     }
 
     public String getLocation() {
@@ -55,5 +60,11 @@ public class UserByLocation implements Serializable {
         this.user_id = user_id;
     }
 
+    public Date getEvent_date_time() {
+        return event_date_time;
+    }
 
+    public void setEvent_date_time(Date event_date_time) {
+        this.event_date_time = event_date_time;
+    }
 }

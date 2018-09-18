@@ -5,10 +5,10 @@ import org.springframework.data.cassandra.repository.Query;
 import org.springframework.data.cassandra.repository.ReactiveCassandraRepository;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface UserByLocationRepository extends ReactiveCassandraRepository<UserByLocation, UUID> {
-
 
     Mono<UserByLocation> findById(UUID id);
 
@@ -21,4 +21,8 @@ public interface UserByLocationRepository extends ReactiveCassandraRepository<Us
     @Override
     Mono<Void> delete(UserByLocation userByLocation);
 
+//    Mono<Void> deleteAllByUser_id(UUID uuid);
+
+    @Override
+    Mono<Void> deleteAll(Iterable<? extends UserByLocation> iterable);
 }

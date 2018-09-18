@@ -3,7 +3,6 @@ package com.darash.carrepairer.repositories;
 import com.darash.carrepairer.entities.User;
 import org.springframework.data.cassandra.repository.Query;
 import org.springframework.data.cassandra.repository.ReactiveCassandraRepository;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import reactor.core.publisher.Flux;
@@ -16,6 +15,10 @@ public interface UserRepository extends ReactiveCassandraRepository<User, UUID> 
     @Query("select * from users where isonline = ?0 ALLOW FILTERING")
     Flux<Slice<User>> findByIsOnline(final boolean isonline, Pageable pageable);
 
+    @Query("select * from users")
+    Flux<Slice<User>> findAll(Pageable pageable);
+
+
     @Override
     <S extends User> Mono<S> save(S s);
 
@@ -24,5 +27,4 @@ public interface UserRepository extends ReactiveCassandraRepository<User, UUID> 
 
     Mono<User> findById(UUID uuid);
 
-//    Flux<Page<User>> findAll(Pageable pageable);
 }

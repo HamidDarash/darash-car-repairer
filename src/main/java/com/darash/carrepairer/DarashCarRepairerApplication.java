@@ -1,5 +1,9 @@
 package com.darash.carrepairer;
 
+import com.darash.carrepairer.entities.PitShop;
+import com.darash.carrepairer.entities.RepresentationService;
+import com.darash.carrepairer.entities.User;
+import com.darash.carrepairer.entities.UserByLocation;
 import com.darash.carrepairer.services.PitShopServiceImpl;
 import com.darash.carrepairer.services.UserByLocationServiceImpl;
 import com.darash.carrepairer.services.UserServiceImpl;
@@ -12,6 +16,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.cassandra.repository.config.EnableReactiveCassandraRepositories;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SpringBootApplication
 @EnableReactiveCassandraRepositories(basePackages = {"com.darash.carrepairer.repositories"})
 
@@ -19,10 +26,16 @@ import org.springframework.data.cassandra.repository.config.EnableReactiveCassan
 @EnableAutoConfiguration
 public class DarashCarRepairerApplication {
 
+    private final UserServiceImpl userService;
+    private final PitShopServiceImpl pitShopService;
+    private final UserByLocationServiceImpl userByLocationService;
+
     @Autowired
-    private UserServiceImpl userService;
-    private PitShopServiceImpl pitShopService;
-    private UserByLocationServiceImpl userByLocationService;
+    public DarashCarRepairerApplication(UserServiceImpl userService, PitShopServiceImpl pitShopService, UserByLocationServiceImpl userByLocationService) {
+        this.userService = userService;
+        this.pitShopService = pitShopService;
+        this.userByLocationService = userByLocationService;
+    }
 
 
     public static void main(String[] args) {
